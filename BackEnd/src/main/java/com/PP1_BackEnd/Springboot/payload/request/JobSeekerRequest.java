@@ -2,6 +2,8 @@ package com.PP1_BackEnd.Springboot.payload.request;
 
 public class JobSeekerRequest {
 	
+	private int id;
+	
 	 private String username;
 
 	  private int locationPincode;
@@ -40,6 +42,14 @@ public class JobSeekerRequest {
 
 	public void setJobType(String jobType) {
 		this.jobType = jobType;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	  

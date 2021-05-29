@@ -31,5 +31,20 @@ public class JobEmployerService {
 		return employerRepo.getTop3Jobs(username);
 	}
 	
+	public List<JobEmployer> viewAll()
+	{
+		return employerRepo.viewAll();
+	}
+	
+	public List<String> getApplicantsUsername(int id)
+	{
+		return employerRepo.getApplicantsName(id);
+	}
+	
+	public void deleteEmployer(String username)
+	{
+		employerRepo.deleteEmployer(username);
+	}
+	
 
 }

@@ -12,11 +12,13 @@ import com.PP1_BackEnd.Springboot.model.Doc;
 
 
 @Repository
-public interface DocRepository  extends JpaRepository<Doc,Integer>{
+public interface DocRepository  extends JpaRepository<Doc,String>{
 
 	
-	@Query(value = "SELECT * FROM Doc WHERE  username = :username", nativeQuery = true)
-	Optional<Doc> findByUsername(@Param("username") String username);
+//	@Query(value = "SELECT * FROM Doc WHERE  username = :username", nativeQuery = true)
+//	Optional<Doc> findByUsername(@Param("username") String username);
+//	
+//	
 	
 	
 	

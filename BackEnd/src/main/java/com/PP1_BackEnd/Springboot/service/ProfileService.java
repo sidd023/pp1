@@ -18,7 +18,7 @@ public class ProfileService {
 		 profileRepo.save(job);
 	}
 	
-	public List<Profile> getByUsername(String username)
+	public Profile getByUsername(String username)
 	{
 		return profileRepo.getByUsername(username);
 	}
@@ -28,6 +28,16 @@ public class ProfileService {
 			String dateOfgraduation, String locationPincode, String category, String username)
 	{
 		profileRepo.updateProfile(summary, university, degreeType, dateOfgraduation, locationPincode, category, username);
+	}
+	
+	public void deleteProfile(String username)
+	{
+		profileRepo.deleteProfile(username);
+	}
+	
+	public List<Profile> getAllProfile()
+	{
+		return profileRepo.getAllProfile();
 	}
 	
 	

@@ -17,7 +17,7 @@ public interface ProfileRepo extends JpaRepository < Profile, Long > {
 	List<Profile> getAllProfiles();
 	
 	@Query(value = "SELECT * FROM Profile WHERE  username = :username", nativeQuery = true)
-	List <Profile> getByUsername(@Param("username") String username);
+	Profile getByUsername(@Param("username") String username);
 	
 	@Transactional
 	@Modifying
@@ -28,6 +28,15 @@ public interface ProfileRepo extends JpaRepository < Profile, Long > {
 	void updateProfile(@Param("summary") String summary, @Param("university")String university, @Param("degreeType")String degree_type, 
 			@Param("dateOfgraduation")String date_of_graduation, @Param("locationPincode")String locationPincode, 
 			@Param("category")String category, @Param("username")String username);
+	
+	
+	@Transactional
+	@Modifying
+	@Query(value = "Delete from Profile WHERE username = :username", nativeQuery = true)
+	void deleteProfile(@Param("username") String username);
+	
+	@Query(value = "SELECT * FROM Profile ", nativeQuery = true)
+	List<Profile> getAllProfile();
 	
 	
 

@@ -1,13 +1,17 @@
 package com.PP1_BackEnd.Springboot.repository;
 
 import java.util.List; 
-import java.util.Optional; 
+import java.util.Optional;
 
+import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.PP1_BackEnd.Springboot.model.JobEmployer;
 import com.PP1_BackEnd.Springboot.model.User;
 
 /*
@@ -21,21 +25,46 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	Boolean existsByEmail(String email);
 	
+	
+	@Query(value = "SELECT * FROM Users WHERE user_type='JOB_SEEKER'; ", nativeQuery= true)
+	List<User> getAllUserBySeeker();
+	
+	@Query(value = "SELECT * FROM Users WHERE user_type='EMPLOYER'; ", nativeQuery= true)
+	List<User> getAllUserByEmployer();
+	
+	
+	@Query(value = "SELECT * FROM Users WHERE user_type='ADMIN'; ", nativeQuery= true)
+	List<User> getAllUserByAdmin();
+	
+	
+	
+	//SELECT COUNT(user_type) FROM Users WHERE user_type='ADMIN';
+
+	@Query(value = "SELECT COUNT(user_type) FROM Users WHERE user_type='ADMIN'; ", nativeQuery= true)
+	int getAdminExistanceCount();
+	 
+	@Query(value = "SELECT id FROM USERS WHERE user_name= :username  ", nativeQuery= true)
+	int getId(@Param("username") String username);        
+	
 	@Query(value = "SELECT user_type FROM USERS WHERE user_name= :username  ", nativeQuery= true)
-	String getUserType(String username);
+	String getUserType(@Param("username") String username);
 	
-	@Query(value = "SELECT USERS.* "
-			+ "FROM USER_ROLES,USERS "
-			+ "where USERS.ID=USER_ROLES.USER_ID "
-			+ "AND USER_ROLES.ROLE_ID=1", nativeQuery= true)
-	List<User> getCustomerDetails();
+	@Transactional
+	@Modifying
+	@Query(value = " Delete u, r from Users u, user_roles r WHERE u.user_name = :username AND u.id=r.user_id", nativeQuery = true)
+	void deleteUser(@Param("username") String username);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "SET FOREIGN_KEY_CHECKS=1 ", nativeQuery= true)
+	void onKey();
+	
+	@Transactional
+	@Modifying
+	@Query(value = "SET FOREIGN_KEY_CHECKS=0 ", nativeQuery= true)
+	void offKey();
 	
 	
-	@Query(value = "SELECT USERS.* "
-			+ "FROM USER_ROLES,USERS "
-			+ "where USERS.ID=USER_ROLES.USER_ID "
-			+ "AND USER_ROLES.ROLE_ID=2", nativeQuery= true)
-	List<User> getEmployeeDetails();
 	
 	
 }

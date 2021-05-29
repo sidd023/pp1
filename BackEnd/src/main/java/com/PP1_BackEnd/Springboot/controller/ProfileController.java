@@ -13,6 +13,7 @@ import com.PP1_BackEnd.Springboot.model.Profile;
 import com.PP1_BackEnd.Springboot.service.ProfileService;
 
 @CrossOrigin(origins = "https://match-making-pp1.herokuapp.com")
+
 @RestController
 @RequestMapping("/seeker/profile")
 public class ProfileController {

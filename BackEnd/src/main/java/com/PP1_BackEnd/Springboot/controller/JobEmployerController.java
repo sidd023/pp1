@@ -12,7 +12,7 @@ import com.PP1_BackEnd.Springboot.model.JobEmployer;
 import com.PP1_BackEnd.Springboot.payload.request.JobEmployerRequest;
 import com.PP1_BackEnd.Springboot.service.JobEmployerService;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://match-making-pp1.herokuapp.com")
 @RestController
 @RequestMapping("/job/employer")
 public class JobEmployerController {

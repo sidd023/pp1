@@ -21,7 +21,7 @@ import com.PP1_BackEnd.Springboot.payload.response.DocResponse;
 import com.PP1_BackEnd.Springboot.service.DocStorageService;
 
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://match-making-pp1.herokuapp.com")
 @RestController
 @RequestMapping("/seeker/docs")
 public class DocController {

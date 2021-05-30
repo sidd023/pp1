@@ -22,7 +22,7 @@ import com.PP1_BackEnd.Springboot.service.JobSeekerService;
 import com.PP1_BackEnd.Springboot.service.ProfileService;
 import com.PP1_BackEnd.Springboot.service.UserService;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://match-making-pp1.herokuapp.com")
 @RestController
 @RequestMapping("/job/seeker")
 /*

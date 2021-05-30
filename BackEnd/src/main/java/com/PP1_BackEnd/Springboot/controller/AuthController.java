@@ -37,7 +37,7 @@ import com.PP1_BackEnd.Springboot.service.UserService;
  * The credentials are stored in the database with hashed passwords along with other details. 
  * Jwt is used for authentication and authorization of users. 
  */
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://match-making-pp1.herokuapp.com")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {

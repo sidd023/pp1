@@ -13,9 +13,9 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 /*
- * Logging in functionality are performed here.
- * The user credientials are searched for in th database
- * to match with the details
+ * Any entry breach into the database are 
+ * stopped and warned 
+ * This uses JWT authentication
  */
 @Component
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {

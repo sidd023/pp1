@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 import com.PP1_BackEnd.Springboot.security.services.UserDetailsImpl;
 import io.jsonwebtoken.*;
 
+/*
+ * used for token creation on every entrypoint 
+ */
 @Component
 public class JwtUtils {
 	private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);

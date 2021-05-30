@@ -2,11 +2,15 @@ package com.PP1_BackEnd.Springboot.payload.request;
 
 import org.springframework.web.multipart.MultipartFile;
 
+/*
+ * request parameter that is used by the doc controller 
+ * for input fields from the user
+ */
 public class DocRequest {
-	
+
 	private String username;
-	
-	private MultipartFile files;
+
+	private MultipartFile file;
 
 	public String getUsername() {
 		return username;
@@ -17,13 +21,13 @@ public class DocRequest {
 	}
 
 	public MultipartFile getFiles() {
-		return files;
+		return file;
 	}
 
 	public void setFiles(MultipartFile files) {
-		this.files = files;
+		this.file = files;
 	}
-	
-	
+
+
 
 }

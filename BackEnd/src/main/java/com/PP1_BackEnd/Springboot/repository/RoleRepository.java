@@ -1,10 +1,9 @@
 package com.PP1_BackEnd.Springboot.repository;
 
-import java.util.Optional;  
+import java.util.Optional; 
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
 import com.PP1_BackEnd.Springboot.model.ERole;
 import com.PP1_BackEnd.Springboot.model.Role;
 
@@ -15,4 +14,6 @@ import com.PP1_BackEnd.Springboot.model.Role;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
 	Optional<Role> findByName(ERole name);
+	
+	
 }

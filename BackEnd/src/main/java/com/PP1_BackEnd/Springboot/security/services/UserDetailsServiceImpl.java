@@ -11,7 +11,8 @@ import com.PP1_BackEnd.Springboot.model.User;
 import com.PP1_BackEnd.Springboot.repository.UserRepository;
 
 /*
- * User details with no particular username match displayed the error message
+ * User with no existing username 
+ * are fetched and error displayed
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

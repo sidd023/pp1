@@ -1,22 +1,25 @@
 package com.PP1_BackEnd.Springboot.payload.request;
 
-
+/*
+ * profile request bode required in
+ * profile controller
+ */
 public class ProfileRequest {
-	
-	
+
+
 	private String summary;
-	
-	
+
+
 	private String university;
-	
-	
+
+
 	private String degree_type;
-	
+
 	private String date_of_graduation;
-	
-	
+
+
 	private String locationPincode;
-	
+
 	private String category;
 
 	public String getSummary() {
@@ -66,7 +69,7 @@ public class ProfileRequest {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	
-	
+
+
 
 }

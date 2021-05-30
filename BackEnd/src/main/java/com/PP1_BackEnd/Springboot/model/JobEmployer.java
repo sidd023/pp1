@@ -1,5 +1,5 @@
 package com.PP1_BackEnd.Springboot.model;
-import javax.persistence.Column;
+import javax.persistence.Column; 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,55 +7,47 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 
-
+/* this tables hold the details of all
+ *  the jobs created by the job seeker
+ */
 @Entity
 @Table(name = "AllJobs")
 
 public class JobEmployer {
-	
-	@Id@GeneratedValue(strategy = GenerationType.IDENTITY)
-	  private long id;
 
-//	jobTitle,
-//    locationPincode,
-//    payType, 
-//    category, 
-//    jobDescription, 
-	
-//    jobType, 
-//    skills, 
-//    employerUsername
-//    
-    
-	  @Column(name = "Job_Title")
-	  private String jobTitle;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 
-	  @Column(name = "Pincode")
-	  private int locationPincode;
+	@Column(name = "Job_Title")
+	private String jobTitle;
 
-	  @Column(name = "Pay_Type")
-	  private String payType;
+	@Column(name = "Pincode")
+	private int locationPincode;
 
-	  @Column(name = "Category")
-	  private String category;
-	  
-	  @Column(name = "Job_Description")
-	  private String jobDescription;
-	  
-	  @Column(name = "Job_Type")
-	  private String jobType;
-	  
-	  @Column(name = "Skills")
-	  private String skills;
-	  
-	  @Column(name = "Employer_Username")
-	  private String employerUsername;
-	  
-	  public JobEmployer()
-	  {
-		  super();
-	  }
-	  
+	@Column(name = "Pay_Type")
+	private String payType;
+
+	@Column(name = "Category")
+	private String category;
+
+	@Column(name = "Job_Description")
+	private String jobDescription;
+
+	@Column(name = "Job_Type")
+	private String jobType;
+
+	@Column(name = "Skills")
+	private String skills;
+
+	@Column(name = "Employer_Username")
+	private String employerUsername;
+
+	public JobEmployer()
+	{
+		super();
+	}
+
 
 	public JobEmployer(long id, String jobTitle, int locationPincode, String payType, String category, String jobDescription,
 			String jobType, String skills, String employerUsername) {
@@ -142,12 +134,12 @@ public class JobEmployer {
 	public void setEmployerUsername(String employerUsername) {
 		this.employerUsername = employerUsername;
 	}
-	  
 
 
-	 
-	
-	
-	
+
+
+
+
+
 
 }

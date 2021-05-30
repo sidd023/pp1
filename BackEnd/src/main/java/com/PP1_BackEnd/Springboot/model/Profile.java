@@ -7,44 +7,46 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
+/*
+ * table to store details of the profiles of the user
+ */
 @Entity
 @Table(name = "Profile")
 
 public class Profile {
-	
+
 	@Id@GeneratedValue(strategy = GenerationType.IDENTITY)
-	  private long id;
-	
+	private long id;
+
 	@Column(name = "Summary")
 	private String summary;
-	
+
 	@Column(name = "Username")
 	private String username;
-	
-	
+
+
 	@Column(name = "University")
 	private String university;
-	
+
 	@Column(name = "Degree_Type")
 	private String degree_type;
-	
+
 	@Column(name = "DateOfGraduation")
 	private String date_of_graduation;
-	
-	
+
+
 	@Column(name = "Pincode")
 	private String locationPincode;
-	
+
 	@Column(name = "Category")
 	private String category;
-	
+
 	public Profile()
-	  {
-		  super();
-	  }
-	
-	
+	{
+		super();
+	}
+
+
 	public Profile(long id, String summary, String university, String degree_type, String date_of_graduation,
 			String locationPincode, String category) {
 		super();
@@ -123,10 +125,10 @@ public class Profile {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 
 }

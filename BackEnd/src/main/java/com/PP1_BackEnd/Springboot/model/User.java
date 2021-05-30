@@ -4,7 +4,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 /*
- * All details of user registrations are stored using following paramaters
+ * All details of user registrations are stored using following variables
  */
 @Entity
 @Table(	name = "users") 
@@ -15,22 +15,22 @@ public class User {
 
 	@Column(name="FirstName")
 	private String firstname;
-	
+
 	@Column(name="UserName")
 	private String username;
-	
+
 	@Column(name="LastName")
 	private String lastname;
 
 	@Column(name="Email")
 	private String email;
-	
+
 	@Column(name="Address")
 	private String address;
-	
+
 	@Column(name="Phone")
 	private String phone;
-	
+
 	@Column(name="UserType")
 	private String user_type;
 
@@ -39,14 +39,14 @@ public class User {
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(	name = "user_roles", 
-				joinColumns = @JoinColumn(name = "user_id"), 
-				inverseJoinColumns = @JoinColumn(name = "role_id"))
+	joinColumns = @JoinColumn(name = "user_id"), 
+	inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
 	public User() {
-	
+
 	}
-	
+
 	public String getFirstname() {
 		return firstname;
 	}
@@ -99,7 +99,7 @@ public class User {
 		this.password = password;
 		this.user_type=user_type;
 	}
-	
+
 	public String getUser_type() {
 		return user_type;
 	}

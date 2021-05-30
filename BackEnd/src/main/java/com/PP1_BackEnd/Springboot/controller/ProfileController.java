@@ -1,6 +1,7 @@
 package com.PP1_BackEnd.Springboot.controller;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,8 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.PP1_BackEnd.Springboot.model.Profile;
 import com.PP1_BackEnd.Springboot.service.ProfileService;
 
-@CrossOrigin(origins = "https://match-making-pp1.herokuapp.com")
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/seeker/profile")
 public class ProfileController {
@@ -24,7 +24,18 @@ public class ProfileController {
 
 	@PostMapping("/saveProfile")
 	public void saveProfile(@RequestBody Profile info){
-		profileService.saveProfile(info);
+		Profile profile = profileService.getByUsername(info.getUsername());
+		//Objects.isNull(profile);
+		if(Objects.nonNull(profile))
+		{
+			profileService.updateProfile(info.getSummary(), info.getUniversity(), info.getDegree_type(), 
+					info.getDate_of_graduation(), info.getLocationPincode(), info.getCategory(), info.getUsername());
+		}
+		else {
+			profileService.saveProfile(info);
+			
+		}
+		
 	}
 	
 	
@@ -36,7 +47,7 @@ public class ProfileController {
 	}
 	
 	@PostMapping("/getProfile")
-	public List<Profile> getProfile(@RequestBody Profile info)
+	public Profile getProfile(@RequestBody Profile info)
 	{
 		return profileService.getByUsername(info.getUsername());
 	}

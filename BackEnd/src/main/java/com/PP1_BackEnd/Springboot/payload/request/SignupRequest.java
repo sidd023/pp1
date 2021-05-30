@@ -4,30 +4,30 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.validation.constraints.*;
- 
-//used in AuthContoller for signing in a user, passed as a paramater into contoller
+
+//used in AuthContoller for signing in a user, passed as a parameter into controller
 public class SignupRequest {
 
 	@Column(name="FirstName")
 	private String firstname;
-	
+
 	@Column(name="LastName")
 	private String lastname;
 
 	@Column(name="Email")
 	@Email
 	private String email;
-	
+
 	@Column(name="Address")
 	private String address;
-	
+
 	@Column(name="Username")
 	private String username;
-	
+
 	@Column(name="UserType")
 	private String user_type;
-    
-	
+
+
 	public String getUsername() {
 		return username;
 	}
@@ -41,8 +41,8 @@ public class SignupRequest {
 
 	@Column(name="Password")
 	private String password;
-    
-    private Set<String> role;
+
+	private Set<String> role;
 
 	public String getFirstname() {
 		return firstname;
@@ -99,7 +99,7 @@ public class SignupRequest {
 	public void setRole(Set<String> role) {
 		this.role = role;
 	}
-	
+
 	public String getUser_type() {
 		return user_type;
 	}
@@ -108,6 +108,6 @@ public class SignupRequest {
 		this.user_type = user_type;
 	}
 
-	
-  
+
+
 }

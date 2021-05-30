@@ -1,23 +1,29 @@
 package com.PP1_BackEnd.Springboot.payload.request;
 
-import java.util.List;
-
-import javax.validation.constraints.NotBlank;
-
-//Used in Employee Controller, passed as a paramater
+//Used in Employee Controller, passed as a request parameter
 
 public class JobEmployerRequest {
 
- private String username;
+	private int id;
 
-public String getUsername() {
-	return username;
-}
+	private String username;
 
-public void setUsername(String username) {
-	this.username = username;
-}
- 
- 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
 
 }

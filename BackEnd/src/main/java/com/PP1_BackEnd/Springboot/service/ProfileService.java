@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 import com.PP1_BackEnd.Springboot.model.Profile;
 import com.PP1_BackEnd.Springboot.repository.ProfileRepo;
 
+/*
+ * service responsible and used by the controllers
+ * to communicate with the repositories
+ */
 @Service
 public class ProfileService {
 	
@@ -18,7 +22,7 @@ public class ProfileService {
 		 profileRepo.save(job);
 	}
 	
-	public List<Profile> getByUsername(String username)
+	public Profile getByUsername(String username)
 	{
 		return profileRepo.getByUsername(username);
 	}
@@ -28,6 +32,27 @@ public class ProfileService {
 			String dateOfgraduation, String locationPincode, String category, String username)
 	{
 		profileRepo.updateProfile(summary, university, degreeType, dateOfgraduation, locationPincode, category, username);
+	}
+	
+	public void deleteProfile(String username)
+	{
+		profileRepo.deleteProfile(username);
+	}
+	
+	public List<Profile> getAllProfile()
+	{
+		return profileRepo.getAllProfile();
+	}
+	
+	public String getByCategory(String username)
+	{
+		return profileRepo.getUserByCategory(username);
+	}
+	
+	
+	public int getByPincode(String username)
+	{
+		return profileRepo.getUserByLocation(username);
 	}
 	
 	

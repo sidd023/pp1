@@ -28,6 +28,8 @@ import com.PP1_BackEnd.Springboot.repository.RoleRepository;
 import com.PP1_BackEnd.Springboot.repository.UserRepository;
 import com.PP1_BackEnd.Springboot.security.jwt.JwtUtils;
 import com.PP1_BackEnd.Springboot.security.services.UserDetailsImpl;
+import com.PP1_BackEnd.Springboot.service.JobEmployerService;
+import com.PP1_BackEnd.Springboot.service.ProfileService;
 import com.PP1_BackEnd.Springboot.service.UserService;
 
 /*
@@ -35,7 +37,7 @@ import com.PP1_BackEnd.Springboot.service.UserService;
  * The credentials are stored in the database with hashed passwords along with other details. 
  * Jwt is used for authentication and authorization of users. 
  */
-@CrossOrigin(origins = "https://match-making-pp1.herokuapp.com")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -45,6 +47,12 @@ public class AuthController {
 
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	JobEmployerService employerService;
+
+	@Autowired
+	ProfileService profileService;
 
 	@Autowired
 	RoleRepository roleRepository;
@@ -64,7 +72,6 @@ public class AuthController {
 
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtils.generateJwtToken(authentication);
 
@@ -73,15 +80,15 @@ public class AuthController {
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 		List < String > roles = userDetails.getAuthorities().stream().map(item ->item.getAuthority()).collect(Collectors.toList());
 
-
-
 		return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
 	}
+
 
 
 	//-----------create new user
 	@PostMapping("/signup")
 	public ResponseEntity < ?>registerUser(@Valid@RequestBody SignupRequest signUpRequest) {
+		// check for existing records 
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
 		}
@@ -90,11 +97,8 @@ public class AuthController {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
 		}
 
-
 		String user_type=signUpRequest.getUser_type();
 		Set < Role > roles = new HashSet < >();
-
-
 
 		if (userRepository.findAll().isEmpty() == true) {
 			Role admin = roleRepository.findByName(ERole.ROLE_ADMIN).orElseThrow(() ->new RuntimeException("Error: Role is not found."));
@@ -117,13 +121,66 @@ public class AuthController {
 				signUpRequest.getPhone(), encoder.encode(signUpRequest.getPassword())
 				, signUpRequest.getUser_type());
 
+		user.setRoles(roles);
+		userRepository.save(user);
+
+		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+	}
 
 
+	//controller to add another admin by the existing admin
+	@PostMapping("/addAdmin")
+	public ResponseEntity < ?>addAdmin(@Valid@RequestBody SignupRequest signUpRequest) {
+		// adding another admin
+		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+		}
+
+		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+		}
+
+		Set < Role > roles = new HashSet < >();
+
+		Role admin = roleRepository.findByName(ERole.ROLE_ADMIN).orElseThrow(() ->new RuntimeException("Error: Role is not found."));
+		signUpRequest.setUser_type("ADMIN");
+		roles.add(admin);
+
+		// Create new user's account
+		User user = new User(signUpRequest.getUsername(), signUpRequest.getFirstname(), signUpRequest.getLastname(), 
+				signUpRequest.getEmail(), signUpRequest.getAddress(),
+				signUpRequest.getPhone(), encoder.encode(signUpRequest.getPassword())
+				, signUpRequest.getUser_type());
 
 		user.setRoles(roles);
 		userRepository.save(user);
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+	}
+
+	// passing user name only
+	@PostMapping("/deleteAdmin")
+	public Boolean deleteAdmin(@Valid@RequestBody SignupRequest signUpRequest) {
+
+		if (userRepository.existsByUsername(signUpRequest.getUsername()) && userService.getAdminExistanceCount()>=2 
+				&& userService.getUserType(signUpRequest.getUsername()).equals("ADMIN")) {
+			String username = signUpRequest.getUsername();
+			profileService.deleteProfile(username);
+			employerService.deleteEmployer(username);
+			userService.deleteUser(username);
+			return true;
+		}
+		return false;
+
+
+	}
+
+
+	// view all admin control over the application
+	@GetMapping("/viewAllAdmin")
+	public List<User> getAllByAdmin()
+	{
+		return userService.getAllByAdmin();
 	}
 
 

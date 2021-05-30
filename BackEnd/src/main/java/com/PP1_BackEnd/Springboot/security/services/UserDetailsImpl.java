@@ -18,15 +18,15 @@ public class UserDetailsImpl implements UserDetails {
 	private Long id;
 
 	private String firstname;
-	
+
 	private String lastname;
-	
+
 	private String address;
-	
+
 	private String phone;
 
 	private String email;
-	
+
 	private String username;
 
 	@JsonIgnore
@@ -137,5 +137,5 @@ public class UserDetailsImpl implements UserDetails {
 		return Objects.equals(id, user.id);
 	}
 
-	
+
 }

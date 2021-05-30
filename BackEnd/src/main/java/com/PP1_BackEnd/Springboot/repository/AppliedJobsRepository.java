@@ -24,7 +24,6 @@ public interface AppliedJobsRepository extends JpaRepository < AppliedJobs, Long
 	@Modifying
 	@Query(value = "Insert into Applied_Jobs(JobId, username) VALUES(:id, :username) ", nativeQuery = true)
 	void applyJob(@Param("id") int id, @Param("username") String username);
-
 	@Query(value = "Select username from Applied_Jobs where id=:id ", nativeQuery = true)
 	List<String> getApplicantsName(@Param("id") int id) ;
 

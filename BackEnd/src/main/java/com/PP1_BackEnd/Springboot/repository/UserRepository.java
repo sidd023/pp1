@@ -49,12 +49,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Modifying
 	@Query(value = " Delete u, r from Users u, user_roles r WHERE u.user_name = :username AND u.id=r.user_id", nativeQuery = true)
 	void deleteUser(@Param("username") String username);
-
 	@Transactional
 	@Modifying
 	@Query(value = "SET FOREIGN_KEY_CHECKS=1 ", nativeQuery= true)
 	void onKey();
-
 	@Transactional
 	@Modifying
 	@Query(value = "SET FOREIGN_KEY_CHECKS=0 ", nativeQuery= true)

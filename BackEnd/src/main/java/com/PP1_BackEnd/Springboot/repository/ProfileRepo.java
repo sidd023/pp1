@@ -22,7 +22,6 @@ public interface ProfileRepo extends JpaRepository < Profile, Long > {
 
 	@Query(value = "SELECT * FROM Profile WHERE  username = :username", nativeQuery = true)
 	Profile getByUsername(@Param("username") String username);
-
 	@Transactional
 	@Modifying
 	@Query(value = "UPDATE Profile "

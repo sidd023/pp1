@@ -3,8 +3,11 @@ package com.PP1_BackEnd.Springboot.service;
 import java.util.List;  
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import com.PP1_BackEnd.Springboot.model.User;
+import com.PP1_BackEnd.Springboot.repository.RoleRepository;
 import com.PP1_BackEnd.Springboot.repository.UserRepository;
 
 /*

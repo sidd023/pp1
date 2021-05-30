@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.PP1_BackEnd.Springboot.model.JobEmployer;
+import com.PP1_BackEnd.Springboot.repository.AppliedJobsRepository;
 import com.PP1_BackEnd.Springboot.repository.JobSeekerRepo;
 
 /*

@@ -247,53 +247,5 @@ public class JobSeekerController {
 
 
 
-	// passing username only
-	@PostMapping("/deleteSeeker")
-	public Boolean deleteAdmin(@Valid@RequestBody JobSeekerRequest info) {
-		if (userRepository.existsByUsername(info.getUsername()) && userService.getUserType(info.getUsername()).equals("JOB_SEEKER")) {
-			String username = info.getUsername();
-			profileService.deleteProfile(username);
-			employerService.deleteEmployer(username);
-			userService.deleteUser(username);
-			return true;
-		}
-		return false;
-	}
-
-	// job id and username
-	@PostMapping("/applyJob")
-	public Boolean applyJob(@RequestBody JobSeekerRequest info){
-		
-		List<Integer> ids = SeekerService.getAppliedJob(info.getUsername());
-		
-		for(Integer i: ids)
-		{
-			if(i==info.getId())
-			{
-				return false;
-			}
-		}
-
-		SeekerService.applyJob(info.getId(), info.getUsername());
-		return true;
-	}
-
-	// username
-	@PostMapping("/getAppliedJobs")
-	public List<JobEmployer> getJobsApplied(@RequestBody JobSeekerRequest info)
-	{
-		List<Integer> ids = SeekerService.getAppliedJob(info.getUsername());
-		List<JobEmployer> jobs= new ArrayList<JobEmployer>();
-		for(Integer i: ids)
-		{
-			jobs.add(SeekerService.getJobsFromID(i));
-		}
-		return jobs;
-	}
-
-
-
-
-
 }
 

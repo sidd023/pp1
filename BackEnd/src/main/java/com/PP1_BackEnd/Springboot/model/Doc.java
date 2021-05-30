@@ -23,6 +23,7 @@ public class Doc {
 	private String fileName;
 
 	private String fileType;
+
 	private String user_name;
 
 	@Lob

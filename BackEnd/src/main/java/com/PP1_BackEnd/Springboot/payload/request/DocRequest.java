@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class DocRequest {
 
 	private String username;
+
 	private MultipartFile file;
 
 	public String getUsername() {

@@ -59,6 +59,19 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Modifying
 	@Query(value = "SET FOREIGN_KEY_CHECKS=0 ", nativeQuery= true)
 	void offKey();
+	
+	
+	@Query(value = "SELECT COUNT(*) FROM Users WHERE user_type='ADMIN'; ", nativeQuery= true)
+	int getTotalAdminCount();
+	
+	@Query(value = "SELECT COUNT(*) FROM Users WHERE user_type='EMPLOYER'; ", nativeQuery= true)
+	int getTotalEmployersCount();
+	
+	
+	@Query(value = "SELECT COUNT(*) FROM Users WHERE user_type='JOB_SEEKER'; ", nativeQuery= true)
+	int getTotalEmployeesCount();
+	
+	
 
 
 

@@ -162,7 +162,7 @@ public class AuthController {
 	@PostMapping("/deleteAdmin")
 	public Boolean deleteAdmin(@Valid@RequestBody SignupRequest signUpRequest) {
 
-		if (userRepository.existsByUsername(signUpRequest.getUsername()) && userService.getAdminExistanceCount()>=2 
+		if (userRepository.existsByUsername(signUpRequest.getUsername()) && userService.getAdminExistanceCount()>2 
 				&& userService.getUserType(signUpRequest.getUsername()).equals("ADMIN")) {
 			String username = signUpRequest.getUsername();
 			profileService.deleteProfile(username);
@@ -175,12 +175,30 @@ public class AuthController {
 
 	}
 
-
 	// view all admin control over the application
 	@GetMapping("/viewAllAdmin")
 	public List<User> getAllByAdmin()
 	{
 		return userService.getAllByAdmin();
+	}
+	
+	@GetMapping("/getAdminCount")
+	public int getCountAdmin()
+	{
+		return userRepository.getTotalAdminCount();
+	}
+	
+	@GetMapping("/getEmployeeCount")
+	public int getCountEmployee()
+	{
+		return userRepository.getTotalEmployeesCount();
+	}
+	
+	
+	@GetMapping("/getEmployerCount")
+	public int getCountEmployer()
+	{
+		return userRepository.getTotalEmployersCount();
 	}
 
 

@@ -46,6 +46,8 @@ public class JobSeekerController {
 
 	@Autowired
 	UserService userService;
+	
+	private List<JobEmployer> jobList = new ArrayList<JobEmployer>();
 
 	// get list of all jobs 
 	@GetMapping("/getjob")
@@ -80,7 +82,9 @@ public class JobSeekerController {
 	@PostMapping("/findall")
 	public List<JobEmployer> getByAllSearch(@RequestBody JobSeekerRequest info){
 
-		List<JobEmployer> jobList = new ArrayList<JobEmployer>();
+		
+		List<JobEmployer> allList = SeekerService.getAllJobs();     
+		  
 		String info_jobtype = info.getJobType();
 		String info_category = info.getCategory();
 		int info_pincode = info.getLocationPincode();
@@ -98,6 +102,7 @@ public class JobSeekerController {
 		}
 		if(info_pincode == 0)
 		{
+			System.out.println(info_pincode+ username);
 			info_pincode = profileService.getByPincode(username);
 			if(info_pincode == 0)
 				info_pincode=3000;
@@ -138,30 +143,32 @@ public class JobSeekerController {
 			for(int i=0; i<selected_jobtype.size(); i++)
 			{
 
-				if(!(SeekerService.findJobs(selected_jobtype.get(i), selected_category.get(j), info_pincode)==null))
-				{
-					jobList.addAll(SeekerService.findJobs(selected_jobtype.get(i), selected_category.get(j), info_pincode));
-
-				}
+				findMatch(selected_jobtype.get(i), selected_category.get(j), info_pincode, allList);
+				
 				dec_pincode = 1;
 				inc_pincode =1;
 				for(int x=0;x<20;x++)
 				{
 					if(check1==true)
 					{
-						if(!(SeekerService.findJobs(selected_jobtype.get(i), selected_category.get(j), info_pincode-dec_pincode)==null))
-						{
-							jobList.addAll(SeekerService.findJobs(selected_jobtype.get(i), selected_category.get(j), (info_pincode-dec_pincode)));
-						}
+						
+						findMatch(selected_jobtype.get(i), selected_category.get(j), info_pincode-dec_pincode, allList);
+						
+//						if(!(SeekerService.findJobs(selected_jobtype.get(i), selected_category.get(j), info_pincode-dec_pincode)==null))
+//						{
+//							jobList.addAll(SeekerService.findJobs(selected_jobtype.get(i), selected_category.get(j), (info_pincode-dec_pincode)));
+//						}
 
 						dec_pincode+=1;
 						check1=false;
 					}
 					if(check1==false) {
-						if(!(SeekerService.findJobs(selected_jobtype.get(i), selected_category.get(j), info_pincode+inc_pincode)==null))
-						{
-							jobList.addAll(SeekerService.findJobs(selected_jobtype.get(i), selected_category.get(j), (info_pincode+inc_pincode)));
-						}
+						findMatch(selected_jobtype.get(i), selected_category.get(j), info_pincode+inc_pincode, allList);
+						
+//						if(!(SeekerService.findJobs(selected_jobtype.get(i), selected_category.get(j), info_pincode+inc_pincode)==null))
+//						{
+//							jobList.addAll(SeekerService.findJobs(selected_jobtype.get(i), selected_category.get(j), (info_pincode+inc_pincode)));
+//						}
 
 						inc_pincode+=1;
 						check1=true;
@@ -176,6 +183,25 @@ public class JobSeekerController {
 
 
 		return jobList;
+	}
+	
+	
+	public void findMatch(String jobType, String category, int location, List<JobEmployer> allList)
+	{
+		List<JobEmployer> foundJob  = new ArrayList<JobEmployer>();
+		for(int i=0;i<allList.size(); i++)
+		{
+			if(allList.get(i).getCategory().equalsIgnoreCase(category) && allList.get(i).getJobType().equalsIgnoreCase(jobType)
+					&& allList.get(i).getlocationPincode()==location)
+			{
+				foundJob.add(allList.get(i));
+			}
+		}
+		if(foundJob!=null)
+			jobList.addAll(foundJob);
+		
+		
+		
 	}
 
 	// view all jobs available

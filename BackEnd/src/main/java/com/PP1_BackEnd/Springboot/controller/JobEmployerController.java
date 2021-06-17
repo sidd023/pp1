@@ -2,6 +2,8 @@ package com.PP1_BackEnd.Springboot.controller;
 
 import java.util.ArrayList; 
 import java.util.List;
+import java.util.stream.Stream;
+
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -90,10 +92,25 @@ public class JobEmployerController {
 	{
 		List<String> username = employerService.getApplicantsUsername(info.getId());
 		List<Profile> profileList = new ArrayList<>();
+		
 		for(int i=0; i<username.size(); i++){
 			profileList.add(profileService.getByUsername(username.get(i)));
 		}
 		return profileList;
 	}
+	
+	@PostMapping("/getApplicantUser")
+	public List<User> getApplicantsUser(@RequestBody JobEmployerRequest info)
+	{
+		List<String> username = employerService.getApplicantsUsername(info.getId());
+		List<User> userList = new ArrayList<>();
+		for(int i=0; i<username.size(); i++){
+			userList.add(userService.getAllUserByUsername(username.get(i)));
+		}
+		return userList;
+	}
+	
+	
+	
 
 }

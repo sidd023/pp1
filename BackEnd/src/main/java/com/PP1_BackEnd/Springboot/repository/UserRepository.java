@@ -34,6 +34,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	@Query(value = "SELECT * FROM Users WHERE user_type='ADMIN'; ", nativeQuery= true)
 	List<User> getAllUserByAdmin();
+	
+	
+	@Query(value = "SELECT * FROM Users WHERE user_name= :username ", nativeQuery= true)
+	User getAllUserByUsername(@Param("username") String username);
+	
 
 
 	@Query(value = "SELECT COUNT(user_type) FROM Users WHERE user_type='ADMIN'; ", nativeQuery= true)

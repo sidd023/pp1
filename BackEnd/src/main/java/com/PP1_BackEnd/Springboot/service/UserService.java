@@ -49,6 +49,13 @@ public class UserService {
 	  return userRepo.getAllUserByAdmin();
   }
   
+  public User getAllUserByUsername(String username)
+  {
+	  return userRepo.getAllUserByUsername(username);
+  }
+  
+  
+  
   
   
   

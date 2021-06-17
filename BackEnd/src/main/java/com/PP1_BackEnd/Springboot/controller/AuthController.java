@@ -182,6 +182,8 @@ public class AuthController {
 		return userService.getAllByAdmin();
 	}
 	
+	
+	
 	@GetMapping("/getAdminCount")
 	public int getCountAdmin()
 	{

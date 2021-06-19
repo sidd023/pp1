@@ -1,8 +1,8 @@
 package com.PP1_BackEnd.Springboot.payload.request;
 
 /*
- * profile request bode required in
- * profile controller
+ * profile request parameter passed in profile controller
+ * for input 
  */
 public class ProfileRequest {
 

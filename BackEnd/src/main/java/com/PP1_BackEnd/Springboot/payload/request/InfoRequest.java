@@ -1,8 +1,8 @@
 package com.PP1_BackEnd.Springboot.payload.request;
 
 /*
- * used in JobSeeker controller as the input 
- * parameter to input from the user
+ * request parameter used as input 
+ * for methods in job seeker controller
  */
 
 public class InfoRequest {

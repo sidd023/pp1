@@ -10,7 +10,7 @@ import com.PP1_BackEnd.Springboot.security.services.UserDetailsImpl;
 import io.jsonwebtoken.*;
 
 /*
- * used for token creation on every entrypoint 
+ * used for token creation on every entry-point 
  */
 @Component
 public class JwtUtils {

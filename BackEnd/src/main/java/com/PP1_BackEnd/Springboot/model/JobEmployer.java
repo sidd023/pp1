@@ -7,8 +7,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 
-/* this tables hold the details of all
- *  the jobs created by the job seeker
+/* 
+ * this tables hold the details of all
+ * the jobs created by the job seeker
  */
 @Entity
 @Table(name = "AllJobs")

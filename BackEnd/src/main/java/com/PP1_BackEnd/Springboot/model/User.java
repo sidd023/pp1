@@ -4,7 +4,8 @@ import java.util.Set;
 import javax.persistence.*;
 
 /*
- * All details of user registrations are stored using following variables
+ * table used to stores all 
+ * details of user registrations 
  */
 @Entity
 @Table(	name = "users") 
@@ -44,7 +45,6 @@ public class User {
 	private Set<Role> roles = new HashSet<>();
 
 	public User() {
-
 	}
 
 	public String getFirstname() {

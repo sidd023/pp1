@@ -28,6 +28,4 @@ public class DocRequest {
 		this.file = files;
 	}
 
-
-
 }

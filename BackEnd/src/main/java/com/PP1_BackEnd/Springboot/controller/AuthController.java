@@ -1,5 +1,5 @@
 package com.PP1_BackEnd.Springboot.controller;
-import java.util.HashSet;  
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -66,29 +66,36 @@ public class AuthController {
 	@Autowired
 	JwtUtils jwtUtils;
 
-	//----------login for all users
+	/*
+	 * this controller takes in user name and password 
+	 * as the input parameter and logs in the user
+	 * by validating the fields 
+	 */
 	@PostMapping("/signin")
-	public ResponseEntity < ?>authenticateUser(@Valid@RequestBody LoginRequest loginRequest) {
+	public ResponseEntity < ? > authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtils.generateJwtToken(authentication);
 
-		//System.out.println(jwt);
-
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-		List < String > roles = userDetails.getAuthorities().stream().map(item ->item.getAuthority()).collect(Collectors.toList());
+		List < String > roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());
 
 		return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
 	}
 
-
-
-	//-----------create new user
+	/*
+	 * controller responsible for user registration which takes in 
+	 * all the parameters as provided in SignupRequest  
+	 */
 	@PostMapping("/signup")
-	public ResponseEntity < ?>registerUser(@Valid@RequestBody SignupRequest signUpRequest) {
-		// check for existing records 
+	public ResponseEntity < ? > registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+		/*
+		 *  check for existing records with user name and email
+		 *  The user name and email are to be unique with each records 
+		 *  to avoid any duplicate records
+		 */
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
 		}
@@ -97,29 +104,34 @@ public class AuthController {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
 		}
 
-		String user_type=signUpRequest.getUser_type();
-		Set < Role > roles = new HashSet < >();
+		String user_type = signUpRequest.getUser_type();
+		Set < Role > roles = new HashSet < > ();
 
+		/* 
+		 * the first user of the application is set default role as admin 
+		 * each role for a user is assigned based on the input
+		 */
 		if (userRepository.findAll().isEmpty() == true) {
-			Role admin = roleRepository.findByName(ERole.ROLE_ADMIN).orElseThrow(() ->new RuntimeException("Error: Role is not found."));
+			Role admin = roleRepository.findByName(ERole.ROLE_ADMIN).orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 			signUpRequest.setUser_type("ADMIN");
 			roles.add(admin);
-		}
-		else if(user_type.equals("EMPLOYER")) {
-			Role employer = roleRepository.findByName(ERole.ROLE_EMPLOYER).orElseThrow(() ->new RuntimeException("Error: Role is not found."));
+		} 
+		else if (user_type.equals("EMPLOYER")) {
+			Role employer = roleRepository.findByName(ERole.ROLE_EMPLOYER).orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 			roles.add(employer);
-		}	
+		} 
 		else {
-			Role userRole = roleRepository.findByName(ERole.ROLE_JOB_SEEKER).orElseThrow(() ->new RuntimeException("Error: Role is not found."));
+			Role userRole = roleRepository.findByName(ERole.ROLE_JOB_SEEKER).orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 			signUpRequest.setUser_type("JOB_SEEKER");
 			roles.add(userRole);
 		}
 
-		// Create new user's account
-		User user = new User(signUpRequest.getUsername(), signUpRequest.getFirstname(), signUpRequest.getLastname(), 
+		/*
+		 *  After assigning the user roles, a new user is created in the database
+		 */
+		User user = new User(signUpRequest.getUsername(), signUpRequest.getFirstname(), signUpRequest.getLastname(),
 				signUpRequest.getEmail(), signUpRequest.getAddress(),
-				signUpRequest.getPhone(), encoder.encode(signUpRequest.getPassword())
-				, signUpRequest.getUser_type());
+				signUpRequest.getPhone(), encoder.encode(signUpRequest.getPassword()), signUpRequest.getUser_type());
 
 		user.setRoles(roles);
 		userRepository.save(user);
@@ -127,10 +139,12 @@ public class AuthController {
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
 
-
-	//controller to add another admin by the existing admin
+	/*
+	 * this controller takes in details required to 
+	 * add another admin by the existing admin
+	 */
 	@PostMapping("/addAdmin")
-	public ResponseEntity < ?>addAdmin(@Valid@RequestBody SignupRequest signUpRequest) {
+	public ResponseEntity < ? > addAdmin(@Valid @RequestBody SignupRequest signUpRequest) {
 		// adding another admin
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
@@ -140,17 +154,21 @@ public class AuthController {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
 		}
 
-		Set < Role > roles = new HashSet < >();
+		Set < Role > roles = new HashSet < > ();
 
-		Role admin = roleRepository.findByName(ERole.ROLE_ADMIN).orElseThrow(() ->new RuntimeException("Error: Role is not found."));
+		/*
+		 * the user role is set as Admin and the account for this user is stored in database
+		 */
+		Role admin = roleRepository.findByName(ERole.ROLE_ADMIN).orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 		signUpRequest.setUser_type("ADMIN");
 		roles.add(admin);
 
-		// Create new user's account
-		User user = new User(signUpRequest.getUsername(), signUpRequest.getFirstname(), signUpRequest.getLastname(), 
+		/*
+		 * creating a new admin user
+		 */
+		User user = new User(signUpRequest.getUsername(), signUpRequest.getFirstname(), signUpRequest.getLastname(),
 				signUpRequest.getEmail(), signUpRequest.getAddress(),
-				signUpRequest.getPhone(), encoder.encode(signUpRequest.getPassword())
-				, signUpRequest.getUser_type());
+				signUpRequest.getPhone(), encoder.encode(signUpRequest.getPassword()), signUpRequest.getUser_type());
 
 		user.setRoles(roles);
 		userRepository.save(user);
@@ -158,13 +176,22 @@ public class AuthController {
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
 
-	// passing user name only
+	/*
+	 * this controller deletes an admin and its associated 
+	 * records from all the tables
+	 */
 	@PostMapping("/deleteAdmin")
-	public Boolean deleteAdmin(@Valid@RequestBody SignupRequest signUpRequest) {
+	public Boolean deleteAdmin(@Valid @RequestBody SignupRequest signUpRequest) {
 
-		if (userRepository.existsByUsername(signUpRequest.getUsername()) && userService.getAdminExistanceCount()>2 
-				&& userService.getUserType(signUpRequest.getUsername()).equals("ADMIN")) {
+		/*
+		 * only delete an admin if there exists at least one admin in the database
+		 */
+		if (userRepository.existsByUsername(signUpRequest.getUsername()) && userService.getAdminExistanceCount() > 2 &&
+				userService.getUserType(signUpRequest.getUsername()).equals("ADMIN")) {
 			String username = signUpRequest.getUsername();
+			/*
+			 * delete all the records linked with the admin record
+			 */
 			profileService.deleteProfile(username);
 			employerService.deleteEmployer(username);
 			userService.deleteUser(username);
@@ -172,35 +199,38 @@ public class AuthController {
 		}
 		return false;
 
-
 	}
 
-	// view all admin control over the application
+	/*
+	 * controller returns the list of all admin stored in database
+	 */
 	@GetMapping("/viewAllAdmin")
-	public List<User> getAllByAdmin()
-	{
+	public List < User > getAllByAdmin() {
 		return userService.getAllByAdmin();
 	}
-	
+
+	/*
+	 * controller returns the total number of admin stored in database
+	 */
 	@GetMapping("/getAdminCount")
-	public int getCountAdmin()
-	{
+	public int getCountAdmin() {
 		return userRepository.getTotalAdminCount();
 	}
-	
+
+	/*
+	 * controller returns the total number of job seekers stored in database
+	 */
 	@GetMapping("/getEmployeeCount")
-	public int getCountEmployee()
-	{
+	public int getCountEmployee() {
 		return userRepository.getTotalEmployeesCount();
 	}
-	
-	
+
+	/*
+	 * controller returns the total number of employers stored in database
+	 */
 	@GetMapping("/getEmployerCount")
-	public int getCountEmployer()
-	{
+	public int getCountEmployer() {
 		return userRepository.getTotalEmployersCount();
 	}
-
-
 
 }

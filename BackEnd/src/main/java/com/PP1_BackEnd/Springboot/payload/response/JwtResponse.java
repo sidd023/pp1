@@ -3,7 +3,8 @@ package com.PP1_BackEnd.Springboot.payload.response;
 import java.util.List;
 
 /*
- * Used in auth controller to generate a token error
+ * Used in auth controller to generate a token response
+ * upon successful log/registration
  */
 public class JwtResponse {
 	private String token;

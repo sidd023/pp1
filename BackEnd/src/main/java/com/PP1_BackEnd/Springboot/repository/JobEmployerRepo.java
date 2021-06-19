@@ -14,7 +14,7 @@ import com.PP1_BackEnd.Springboot.model.JobEmployer;
 
 /*
  * this repository stores all the details related to
- * job employer and communicated with the table 
+ * job employer and stores them in the table 
  * to keep it updated
  */
 @Repository
@@ -33,7 +33,6 @@ public interface JobEmployerRepo extends JpaRepository < JobEmployer, Long > {
 	@Modifying
 	@Query(value = "Delete from All_jobs WHERE Employer_Username = :username", nativeQuery = true)
 	void deleteEmployer(@Param("username") String username);
-
 
 	@Query(value = "Select DISTINCT username from Applied_Jobs where job_id=:id ", nativeQuery = true)
 	List<String> getApplicantsName(@Param("id") int id) ;

@@ -1,6 +1,5 @@
 package com.PP1_BackEnd.Springboot.controller;
 
-
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -20,41 +19,40 @@ import com.PP1_BackEnd.Springboot.model.Doc;
 import com.PP1_BackEnd.Springboot.payload.response.DocResponse;
 import com.PP1_BackEnd.Springboot.service.DocStorageService;
 
-
 @CrossOrigin(origins = "https://match-making-pp1.herokuapp.com")
 @RestController
 @RequestMapping("/seeker/docs")
 public class DocController {
 
-	@Autowired
-	private DocStorageService fileStorageService;
+  @Autowired
+  private DocStorageService fileStorageService;
 
-	// download the file uploaded by the user
-	// resume or cover letter uploaded by the seeker can be downloaded
-	@GetMapping("/downloadFile/{fileName:.+}")
-	public ResponseEntity<?> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
-		// Load file as Resource
-		Doc databaseFile = fileStorageService.getFile(fileName);
+  // download the file uploaded by the user
+  // resume or cover letter uploaded by the seeker can be downloaded
+  @GetMapping("/downloadFile/{fileName:.+}")
+  public ResponseEntity < ? > downloadFile(@PathVariable String fileName, HttpServletRequest request) {
+    // Load file as Resource
+    Doc databaseFile = fileStorageService.getFile(fileName);
 
-		return ResponseEntity.ok()
-				.contentType(MediaType.parseMediaType(databaseFile.getFileType()))
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + databaseFile.getFileName() + "\"")
-				.body(new ByteArrayResource(databaseFile.getData()));
-	}
+    return ResponseEntity.ok()
+      .contentType(MediaType.parseMediaType(databaseFile.getFileType()))
+      .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + databaseFile.getFileName() + "\"")
+      .body(new ByteArrayResource(databaseFile.getData()));
+  }
 
-	// upload a document into the database
-	@PostMapping("/uploadFile")
-	public DocResponse uploadFile(@RequestParam("file") MultipartFile file,@RequestParam("username") String username) {
-		
-		Doc fileName = fileStorageService.storeFile(file, username);
-		String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-				.path("/downloadFile/")
-				.path(fileName.getFileName())
-				.toUriString();
+  // upload a document into the database
+  @PostMapping("/uploadFile")
+  public DocResponse uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("username") String username) {
 
-		return new 
-				DocResponse(fileName.getFileName(), fileDownloadUri,
-						file.getContentType(), file.getSize());
-	}
+    Doc fileName = fileStorageService.storeFile(file, username);
+    String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+      .path("/downloadFile/")
+      .path(fileName.getFileName())
+      .toUriString();
+
+    return new
+    DocResponse(fileName.getFileName(), fileDownloadUri,
+      file.getContentType(), file.getSize());
+  }
 
 }

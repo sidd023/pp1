@@ -11,6 +11,7 @@ import com.PP1_BackEnd.Springboot.repository.JobEmployerRepo;
 /*
  * service responsible and used by the controllers
  * to communicate with the repositories
+ * passes the details from the controller to the repositories
  */
 @Service
 public class JobEmployerService {

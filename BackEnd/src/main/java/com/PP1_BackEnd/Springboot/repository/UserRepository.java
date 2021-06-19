@@ -24,22 +24,17 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	Boolean existsByEmail(String email);
 
-
 	@Query(value = "SELECT * FROM Users WHERE user_type='JOB_SEEKER'; ", nativeQuery= true)
 	List<User> getAllUserBySeeker();
 
 	@Query(value = "SELECT * FROM Users WHERE user_type='EMPLOYER'; ", nativeQuery= true)
 	List<User> getAllUserByEmployer();
 
-
 	@Query(value = "SELECT * FROM Users WHERE user_type='ADMIN'; ", nativeQuery= true)
 	List<User> getAllUserByAdmin();
-	
-	
+
 	@Query(value = "SELECT * FROM Users WHERE user_name= :username ", nativeQuery= true)
 	User getAllUserByUsername(@Param("username") String username);
-	
-
 
 	@Query(value = "SELECT COUNT(user_type) FROM Users WHERE user_type='ADMIN'; ", nativeQuery= true)
 	int getAdminExistanceCount();
@@ -64,21 +59,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Modifying
 	@Query(value = "SET FOREIGN_KEY_CHECKS=0 ", nativeQuery= true)
 	void offKey();
-	
-	
+
 	@Query(value = "SELECT COUNT(*) FROM Users WHERE user_type='ADMIN'; ", nativeQuery= true)
 	int getTotalAdminCount();
-	
+
 	@Query(value = "SELECT COUNT(*) FROM Users WHERE user_type='EMPLOYER'; ", nativeQuery= true)
 	int getTotalEmployersCount();
-	
-	
+
 	@Query(value = "SELECT COUNT(*) FROM Users WHERE user_type='JOB_SEEKER'; ", nativeQuery= true)
 	int getTotalEmployeesCount();
-	
-	
-
-
-
 
 }

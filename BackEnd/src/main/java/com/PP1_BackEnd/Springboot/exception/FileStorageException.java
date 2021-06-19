@@ -1,6 +1,9 @@
 package com.PP1_BackEnd.Springboot.exception;
 
-// display appropriate messages on the file storage 
+/*
+ * handle file error and  display
+ * messages on the file storage error
+ */
 public class FileStorageException extends RuntimeException {
 	
 	private static final long serialVersionUID = 1L;

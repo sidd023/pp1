@@ -1,6 +1,8 @@
 package com.PP1_BackEnd.Springboot.payload.request;
 
-//Used in Employee Controller, passed as a request parameter
+/*
+ * Request parameter used as in job employer controller
+ */
 
 public class JobEmployerRequest {
 

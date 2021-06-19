@@ -3,7 +3,7 @@ package com.PP1_BackEnd.Springboot.payload.request;
 import javax.validation.constraints.NotBlank;
 
 /*
- * LogIn request parameters are passed in Auth contoller
+ * LogIn request parameters passed in Auth controller
  */
 public class LoginRequest {
 	@NotBlank

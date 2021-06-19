@@ -5,7 +5,10 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.validation.constraints.*;
 
-//used in AuthContoller for signing in a user, passed as a parameter into controller
+/*
+ * request parameter used in AuthContoller 
+ * for signing in a user
+ */
 public class SignupRequest {
 
 	@Column(name="FirstName")

@@ -1,7 +1,7 @@
 package com.PP1_BackEnd.Springboot.payload.request;
 
 /*
- * request partamater used on seeker controller
+ * request parameter used on seeker controller as input
  */
 public class JobSeekerRequest {
 

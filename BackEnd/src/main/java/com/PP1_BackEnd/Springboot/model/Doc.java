@@ -9,7 +9,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 /*
- * stores the details of the file uploaded with the username
+ * stores the details of the file uploaded by the user
+ * along with the filename, file_type and username 
  */
 @Entity
 @Table(name = "files")

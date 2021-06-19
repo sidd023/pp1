@@ -3,7 +3,8 @@ package com.PP1_BackEnd.Springboot.model;
 import javax.persistence. * ;
 
 /*
- * User type roles are stored and initiated 
+ * table used to store user type 
+ * roles of each user uponn registration 
  */
 @Entity
 @Table(name = "roles")

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 /*
  * Any entry breach into the database are 
- * stopped and warned 
+ * prevented 
  * This uses JWT authentication
  */
 @Component

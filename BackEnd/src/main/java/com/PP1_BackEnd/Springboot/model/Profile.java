@@ -8,14 +8,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /*
- * table to store details of the profiles of the user
+ * table stores the details of profile user input 
+ * given by each user 
  */
 @Entity
 @Table(name = "Profile")
 
 public class Profile {
 
-	@Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	@Column(name = "Summary")
@@ -23,7 +25,6 @@ public class Profile {
 
 	@Column(name = "Username")
 	private String username;
-
 
 	@Column(name = "University")
 	private String university;
@@ -33,7 +34,6 @@ public class Profile {
 
 	@Column(name = "DateOfGraduation")
 	private String date_of_graduation;
-
 
 	@Column(name = "Pincode")
 	private String locationPincode;
@@ -45,7 +45,6 @@ public class Profile {
 	{
 		super();
 	}
-
 
 	public Profile(long id, String summary, String university, String degree_type, String date_of_graduation,
 			String locationPincode, String category) {
@@ -125,10 +124,6 @@ public class Profile {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
-
-
-
 
 
 }

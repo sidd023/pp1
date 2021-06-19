@@ -20,7 +20,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.PP1_BackEnd.Springboot.security.services.UserDetailsServiceImpl;
 
 /*
- * User authentication are done
+ * User authentication are done by generating and validating woth the token
  */
 public class AuthTokenFilter extends OncePerRequestFilter {
 	@Autowired

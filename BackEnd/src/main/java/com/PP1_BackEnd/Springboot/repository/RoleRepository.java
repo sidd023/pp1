@@ -8,7 +8,7 @@ import com.PP1_BackEnd.Springboot.model.ERole;
 import com.PP1_BackEnd.Springboot.model.Role;
 
 /*
- * The table is prefilled with pre-defined roles to make it 
+ * The table is pre-filled with pre-defined roles to make it 
  * consistent for new user registration 
  */
 @Repository

@@ -51,7 +51,7 @@ public class ProfileService {
 	}
 	
 	
-	public int getByPincode(String username)
+	public String getByPincode(String username)
 	{
 		return profileRepo.getUserByLocation(username);
 	}

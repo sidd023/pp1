@@ -9,7 +9,7 @@ public class JobSeekerRequest {
 
 	private String username;
 
-	private int locationPincode;
+	private String locationPincode;
 
 	private String category;
 
@@ -23,11 +23,11 @@ public class JobSeekerRequest {
 		this.username = username;
 	}
 
-	public int getLocationPincode() {
+	public String getLocationPincode() {
 		return locationPincode;
 	}
 
-	public void setLocationPincode(int locationPincode) {
+	public void setLocationPincode(String locationPincode) {
 		this.locationPincode = locationPincode;
 	}
 

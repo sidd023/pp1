@@ -83,9 +83,10 @@ public class JobSeekerController {
 
 		String info_jobtype = info.getJobType();
 		String info_category = info.getCategory();
-		int info_pincode = info.getLocationPincode();
+		String pincode = info.getLocationPincode();
 		String username = info.getUsername();
-
+		int info_pincode=0;
+		
 		/*
 		 * the input values are checked for null
 		 * and for each null value, the values are fetched from 
@@ -101,11 +102,16 @@ public class JobSeekerController {
 			if (info_category == null)
 				info_category = "Engineering";
 		}
-		if (info_pincode == 0) {
-			info_pincode = profileService.getByPincode(username);
-			if (info_pincode == 0)
-				info_pincode = 3000;
+		if (pincode == null) {
+			String profile_pincode = profileService.getByPincode(username);
+			if (profile_pincode != null)
+				info_pincode=Integer.parseInt(profile_pincode);
 		}
+		if(pincode=="")
+			info_pincode=3000;
+		else
+			info_pincode=Integer.parseInt(pincode);
+			
 
 		/*
 		 * list of all job types and category stored in a list

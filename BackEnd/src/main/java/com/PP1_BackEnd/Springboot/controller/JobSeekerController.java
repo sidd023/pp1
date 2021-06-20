@@ -100,9 +100,9 @@ public class JobSeekerController {
 			if (info_category == null)
 				info_category = "Engineering";
 		}
-		if (info_pincode == 0) {
+		if (info_pincode == null) {
 			info_pincode = profileService.getByPincode(username);
-			if (info_pincode == 0)
+			if (info_pincode == null)
 				info_pincode = 3000;
 		}
 

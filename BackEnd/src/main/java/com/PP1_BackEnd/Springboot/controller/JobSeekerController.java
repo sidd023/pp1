@@ -2,6 +2,8 @@ package com.PP1_BackEnd.Springboot.controller;
 
 import java.util.ArrayList; 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -116,7 +118,8 @@ public class JobSeekerController {
 				"Engineering",
 				"Medical",
 				"Art",
-				"Information Technology"
+				"Information Technology",
+				"Education"
 		};
 
 		List < String > selected_jobtype = new ArrayList < String > ();
@@ -156,7 +159,7 @@ public class JobSeekerController {
 				findMatch(selected_jobtype.get(i), selected_category.get(j), info_pincode, allList);
 				dec_pincode = 1;
 				inc_pincode = 1;
-				for (int x = 0; x < 20; x++) {
+				for (int x = 0; x < 50; x++) {
 					if (check1 == true) {
 						findMatch(selected_jobtype.get(i), selected_category.get(j), info_pincode - dec_pincode, allList);
 						dec_pincode += 1;
@@ -170,7 +173,12 @@ public class JobSeekerController {
 				}
 			}
 		}
-		return jobList;
+		/*
+		 * remove any duplicate job from the list
+		 */
+		return jobList.stream()
+                .distinct()
+                .collect(Collectors.toList());
 	}
 
 	/* 

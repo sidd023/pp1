@@ -79,6 +79,7 @@ public class JobSeekerController {
 	public List < JobEmployer > getByAllSearch(@RequestBody JobSeekerRequest info) {
 
 		List < JobEmployer > allList = SeekerService.getAllJobs();
+		jobList = new ArrayList < JobEmployer > ();
 
 		String info_jobtype = info.getJobType();
 		String info_category = info.getCategory();

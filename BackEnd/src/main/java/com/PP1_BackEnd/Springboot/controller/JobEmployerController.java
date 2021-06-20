@@ -15,6 +15,7 @@ import com.PP1_BackEnd.Springboot.model.Profile;
 import com.PP1_BackEnd.Springboot.model.User;
 import com.PP1_BackEnd.Springboot.payload.request.JobEmployerRequest;
 import com.PP1_BackEnd.Springboot.repository.UserRepository;
+import com.PP1_BackEnd.Springboot.service.AppliedJobService;
 import com.PP1_BackEnd.Springboot.service.JobEmployerService;
 import com.PP1_BackEnd.Springboot.service.ProfileService;
 import com.PP1_BackEnd.Springboot.service.UserService;
@@ -33,6 +34,9 @@ public class JobEmployerController {
 
   @Autowired
   UserRepository userRepository;
+  
+  @Autowired
+  AppliedJobService appliedjob;
 
   @Autowired
   JobEmployerService employerService;
@@ -98,6 +102,11 @@ public class JobEmployerController {
   public Boolean deleteAdmin(@Valid @RequestBody JobEmployerRequest info) {
     if (userRepository.existsByUsername(info.getUsername()) && userService.getUserType(info.getUsername()).equals("EMPLOYER")) {
       String username = info.getUsername();
+      List<Integer> jobID = appliedjob.getEmployerJob(username);
+      for(int i=0;i<jobID.size(); i++)
+      {
+    	  appliedjob.deleteJob(jobID.get(i));
+      }
       profileService.deleteProfile(username);
       employerService.deleteEmployer(username);
       userService.deleteUser(username);

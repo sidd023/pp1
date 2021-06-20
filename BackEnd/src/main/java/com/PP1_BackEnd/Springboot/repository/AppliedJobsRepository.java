@@ -33,4 +33,17 @@ public interface AppliedJobsRepository extends JpaRepository < AppliedJobs, Long
 	@Query(value = "Select username from Applied_Jobs where id=:id ", nativeQuery = true)
 	List<String> getApplicantsName(@Param("id") int id) ;
 
+	
+	@Query(value = "SELECT id FROM all_jobs where employer_username=:username ", nativeQuery = true)
+	List<Integer> getEmployerJob(@Param("username") String username);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "Delete from Applied_Jobs where job_id= :id ", nativeQuery = true)
+	void deleteJob(@Param("id") int id);
+
+	@Transactional
+	@Modifying
+	@Query(value = "Delete from Applied_Jobs where username= :username ", nativeQuery = true)
+	void deleteSeeker(@Param("username")  String username);
 }

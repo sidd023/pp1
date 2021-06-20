@@ -85,6 +85,7 @@ public class JobSeekerController {
 		String info_category = info.getCategory();
 		int info_pincode = info.getLocationPincode();
 		String username = info.getUsername();
+		System.out.println(info_jobtype+" "+info_category+" "+info_pincode);
 
 		/*
 		 * the input values are checked for null
